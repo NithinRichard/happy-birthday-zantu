@@ -555,6 +555,18 @@
             <div id="puzzle3-success" class="success-message">You got it! 🎉</div>
         </div>
 
+        <!-- Puzzle 4 - The Day We Fell in Love -->
+        <div id="puzzle4" class="screen">
+            <h2>Puzzle 4</h2>
+            <div class="emoji-display">💕💖✨🌟💫</div>
+            <p>When did our love story begin? The day we fell in love... 💕</p>
+            <p style="font-size: 1rem; color: var(--primary-purple);">Enter the date in DD-MM-YYYY format</p>
+            <input type="text" id="puzzle4-input" class="input-field" placeholder="DD-MM-YYYY">
+            <button class="button" onclick="checkPuzzle4()">Submit</button>
+            <div id="puzzle4-error" class="error-message">Not quite right! Think about that magical December day in 2017 💕</div>
+            <div id="puzzle4-success" class="success-message">Yes! That beautiful day when everything changed! 💖✨</div>
+        </div>
+
         <!-- Final Screen - Surprise Message -->
         <div id="final-screen" class="screen">
             <div class="memory-slideshow">
@@ -693,7 +705,7 @@
                 });
                 
                 setTimeout(() => {
-                    showScreen('final-screen');
+                    showScreen('puzzle4');
                 }, 3000);
             } else {
                 errorMsg.style.display = 'block';
@@ -790,6 +802,39 @@
         document.getElementById('puzzle3-input').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 checkPuzzle3();
+            }
+        });
+        
+        // Puzzle 4 - The Day We Fell in Love
+        function checkPuzzle4() {
+            const input = document.getElementById('puzzle4-input').value.trim();
+            const errorMsg = document.getElementById('puzzle4-error');
+            const successMsg = document.getElementById('puzzle4-success');
+            
+            if (input === '22-12-2017') {
+                errorMsg.style.display = 'none';
+                successMsg.style.display = 'block';
+                
+                // Trigger confetti
+                confetti({
+                    particleCount: 200,
+                    angle: 90,
+                    spread: 100,
+                    origin: { y: 0.5 }
+                });
+                
+                setTimeout(() => {
+                    showScreen('final-screen');
+                }, 3000);
+            } else {
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+            }
+        }
+        
+        document.getElementById('puzzle4-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPuzzle4();
             }
         });
     </script>
