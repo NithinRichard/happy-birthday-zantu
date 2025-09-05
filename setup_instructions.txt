@@ -1,0 +1,26 @@
+SETUP INSTRUCTIONS FOR ZANTU'S BIRTHDAY WEBPAGE
+==============================================
+
+To add your photos to the webpage:
+
+1. Save your 6 photos in the 'images' folder with these exact names:
+   - photo1.jpg (for welcome screen - 1st photo)
+   - photo2.jpg (for welcome screen - 2nd photo) 
+   - photo3.jpg (for welcome screen - 3rd photo)
+   - photo4.jpg (for final screen slideshow - 1st photo)
+   - photo5.jpg (for final screen slideshow - 2nd photo)
+   - photo6.jpg (for final screen slideshow - 3rd photo)
+
+2. The photos should be in JPG format
+3. Recommended size: 500x500 pixels or larger for best quality
+
+FEATURES ADDED:
+- Photo gallery on welcome screen with hover effects
+- Automatic slideshow on final screen
+- Sparkle animations throughout
+- Confetti effects when clicking photos
+- Personalized messages for Zantu
+- Pulse animation on buttons
+- Enhanced romantic styling
+
+The webpage is now ready for Zantu's birthday surprise!

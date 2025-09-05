@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY BIRTHDAY ZANTU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff9eb5;
+            --primary-purple: #c77dff;
+            --light-pink: #ffd6e0;
+            --light-purple: #e0c3fc;
+            --dark-pink: #ff6b9d;
+            --white: #ffffff;
+            --text-dark: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-pink), var(--light-purple));
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: var(--dark-pink);
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .emoji-display {
+            font-size: 3rem;
+            margin: 20px 0;
+        }
+
+        .button {
+            background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: 2px solid var(--light-pink);
+            margin: 20px 0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 10px rgba(255, 158, 181, 0.3);
+        }
+
+        .scrambled-words {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .word-tile {
+            background-color: var(--light-pink);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .word-tile:hover {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        .word-tile.selected {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .sentence-display {
+            min-height: 50px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+        }
+
+        .word-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .word-item {
+            background-color: var(--light-pink);
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .word-item:hover {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            transform: translateY(-5px);
+        }
+
+        .final-message {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin: 30px 0;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-pink);
+            transform: rotate(45deg);
+            animation: float 3s infinite ease-in-out;
+            opacity: 0.7;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-pink);
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            left: -10px;
+            top: 0;
+        }
+
+        .balloon {
+            position: absolute;
+            width: 40px;
+            height: 50px;
+            border-radius: 50%;
+            animation: float 4s infinite ease-in-out;
+            opacity: 0.7;
+        }
+
+        .balloon:before {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 20px;
+            background-color: inherit;
+            bottom: -10px;
+            left: 15px;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .balloon:after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 50px;
+            background-color: #333;
+            bottom: -60px;
+            left: 19px;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .success-message {
+            color: #2ecc71;
+            margin-top: 10px;
+            font-size: 1rem;
+            display: none;
+        }
+
+        .easter-egg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            color: var(--white);
+            font-size: 2rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .easter-egg-content {
+            background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 80%;
+            animation: bounceIn 0.8s ease-in-out;
+        }
+
+        .close-easter-egg {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--white);
+        }
+
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(45deg); }
+            50% { transform: translateY(-20px) rotate(45deg); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .photo-gallery {
+            margin: 20px 0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .photo-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .couple-photo {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--primary-pink);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .couple-photo:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: var(--primary-purple);
+            box-shadow: 0 10px 25px rgba(255, 158, 181, 0.4);
+        }
+
+        .memory-slideshow {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f8f8;
+        }
+
+        .slideshow-photo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            top: 0;
+            left: 0;
+        }
+
+        .slideshow-photo.active {
+            opacity: 1;
+        }
+
+        .love-message {
+            font-style: italic;
+            color: var(--primary-purple);
+            font-size: 1.3rem;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: gold;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .chocolate-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .chocolate-option {
+            background: linear-gradient(135deg, #8B4513, #D2691E);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-weight: 600;
+            border: 3px solid transparent;
+        }
+
+        .chocolate-option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 69, 19, 0.3);
+        }
+
+        .chocolate-option.selected {
+            border-color: var(--primary-pink);
+            background: linear-gradient(135deg, var(--primary-pink), var(--primary-purple));
+        }
+
+        .selected-display {
+            min-height: 30px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            margin: 15px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .emoji-display {
+                font-size: 2.5rem;
+            }
+
+            .word-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+
+            .couple-photo {
+                width: 100px;
+                height: 100px;
+            }
+
+            .memory-slideshow {
+                width: 250px;
+                height: 250px;
+            }
+
+            .chocolate-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="photo-gallery">
+                <div class="photo-container">
+                    <img src="images/photo1.jpg" alt="Our Memory" class="couple-photo">
+                    <img src="images/photo2.jpg" alt="Our Memory" class="couple-photo">
+                    <img src="images/photo3.jpg" alt="Our Memory" class="couple-photo">
+                </div>
+            </div>
+            <h1>Happy Birthday, Zantu 🎂💖</h1>
+            <p class="love-message">My beautiful queen, solve these puzzles to unlock your special surprise!</p>
+            <button class="button pulse" onclick="showScreen('puzzle1')">Start Our Journey ✨</button>
+        </div>
+
+        <!-- Puzzle 1 - Queen of the Day -->
+        <div id="puzzle1" class="screen">
+            <h2>Puzzle 1</h2>
+            <div class="emoji-display">🍰🎈💖🌹👑</div>
+            <p>Who's the queen of today?</p>
+            <input type="text" id="puzzle1-input" class="input-field" placeholder="Your answer...">
+            <button class="button" onclick="checkPuzzle1()">Submit</button>
+            <div id="puzzle1-error" class="error-message">Oops! Try again. Hint: It's you!</div>
+            <div id="puzzle1-success" class="success-message">Correct! 🎉 Let's move on...</div>
+        </div>
+
+        <!-- Puzzle 2 - Chocolate Choice -->
+        <div id="puzzle2" class="screen">
+            <h2>Puzzle 2</h2>
+            <div class="emoji-display">🍫💖🎁</div>
+            <p>What was the first chocolate I gave you? Choose wisely! 😉</p>
+            <div class="chocolate-options">
+                <div class="chocolate-option" onclick="selectChocolate(this, 'kitkat')">KitKat 🍫</div>
+                <div class="chocolate-option" onclick="selectChocolate(this, 'snickers')">Snickers 🥜</div>
+                <div class="chocolate-option" onclick="selectChocolate(this, 'dairymilk')">Dairy Milk Silk Bubbly 💜</div>
+                <div class="chocolate-option" onclick="selectChocolate(this, 'ferrero')">Ferrero Rocher 🍰</div>
+                <div class="chocolate-option" onclick="selectChocolate(this, 'toblerone')">Toblerone 🔺</div>
+                <div class="chocolate-option" onclick="selectChocolate(this, 'lindt')">Lindt 🍫</div>
+            </div>
+            <div id="selected-chocolate" class="selected-display"></div>
+            <button class="button" onclick="checkPuzzle2()">Submit</button>
+            <div id="puzzle2-error" class="error-message">Not the right one! Think about that smooth, bubbly texture 😍</div>
+            <div id="puzzle2-success" class="success-message">Perfect! That sweet memory! 🎉💖</div>
+        </div>
+
+        <!-- Puzzle 3 - Hidden Message -->
+        <div id="puzzle3" class="screen">
+            <h2>Puzzle 3</h2>
+            <p>Take the first letters to find the secret word.</p>
+            <div class="word-list">
+                <div class="word-item">Beautiful 🌸</div>
+                <div class="word-item">Radiant 🌟</div>
+                <div class="word-item">Intelligent 🧠</div>
+                <div class="word-item">Gorgeous 😍</div>
+                <div class="word-item">Hopeful 🌈</div>
+                <div class="word-item">Talented 🎨</div>
+                <div class="word-item">Honest 🤍</div>
+                <div class="word-item">Dazzling ✨</div>
+                <div class="word-item">Awesome 🌻</div>
+                <div class="word-item">Youthful 🌹</div>
+            </div>
+            <input type="text" id="puzzle3-input" class="input-field" placeholder="Your answer...">
+            <button class="button" onclick="checkPuzzle3()">Submit</button>
+            <div id="puzzle3-error" class="error-message">That's not it. Look at the first letters!</div>
+            <div id="puzzle3-success" class="success-message">You got it! 🎉</div>
+        </div>
+
+        <!-- Final Screen - Surprise Message -->
+        <div id="final-screen" class="screen">
+            <div class="memory-slideshow">
+                <img src="images/photo4.jpg" alt="Our Memory" class="slideshow-photo active">
+                <img src="images/photo5.jpg" alt="Our Memory" class="slideshow-photo">
+                <img src="images/photo6.jpg" alt="Our Memory" class="slideshow-photo">
+            </div>
+            <h1>🎉 Happy Birthday, My Love Zantu! 🎉</h1>
+            <div class="final-message">
+                You are my sunshine, my heart, my everything. Every moment with you is a treasure. Happy Birthday to the most amazing woman in the world! 💖
+            </div>
+            <button class="button" onclick="showScreen('welcome-screen')">Relive Our Love Story</button>
+        </div>
+
+        <!-- Decorative elements -->
+        <div class="heart" style="top: 10%; left: 5%;"></div>
+        <div class="heart" style="top: 20%; right: 10%;"></div>
+        <div class="heart" style="bottom: 30%; left: 15%;"></div>
+        <div class="heart" style="bottom: 20%; right: 5%;"></div>
+        
+        <div class="balloon" style="top: 5%; left: 20%; background-color: var(--primary-pink);"></div>
+        <div class="balloon" style="top: 15%; right: 25%; background-color: var(--primary-purple);"></div>
+        <div class="balloon" style="bottom: 10%; left: 30%; background-color: var(--light-pink);"></div>
+        <div class="balloon" style="bottom: 15%; right: 15%; background-color: var(--light-purple);"></div>
+    </div>
+
+    <!-- Easter Egg -->
+    <div id="easter-egg" class="easter-egg">
+        <div class="easter-egg-content">
+            <span class="close-easter-egg" onclick="closeEasterEgg()">&times;</span>
+            <h2>Secret unlocked!</h2>
+            <p>I love you forever and always, my beautiful Zantu 💘</p>
+        </div>
+    </div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        // Screen navigation
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            const activeScreen = document.getElementById(screenId);
+            activeScreen.classList.add('active');
+            activeScreen.style.animation = 'slideIn 0.8s ease-in-out';
+        }
+
+        // Puzzle 1 - Queen of the Day
+        function checkPuzzle1() {
+            const input = document.getElementById('puzzle1-input').value.toLowerCase().trim();
+            const errorMsg = document.getElementById('puzzle1-error');
+            const successMsg = document.getElementById('puzzle1-success');
+            
+            if (input === 'zantu' || input === 'you') {
+                errorMsg.style.display = 'none';
+                successMsg.style.display = 'block';
+                
+                setTimeout(() => {
+                    showScreen('puzzle2');
+                }, 2000);
+            } else {
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+            }
+        }
+
+        // Puzzle 2 - Chocolate Choice
+        let selectedChocolate = '';
+        
+        function selectChocolate(element, chocolate) {
+            // Remove previous selection
+            document.querySelectorAll('.chocolate-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Select current option
+            element.classList.add('selected');
+            selectedChocolate = chocolate;
+            
+            // Update display
+            document.getElementById('selected-chocolate').textContent = 
+                'Selected: ' + element.textContent;
+        }
+        
+        function checkPuzzle2() {
+            const errorMsg = document.getElementById('puzzle2-error');
+            const successMsg = document.getElementById('puzzle2-success');
+            
+            if (selectedChocolate === 'dairymilk') {
+                errorMsg.style.display = 'none';
+                successMsg.style.display = 'block';
+                
+                // Trigger confetti
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+                
+                setTimeout(() => {
+                    showScreen('puzzle3');
+                }, 3000);
+            } else {
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+            }
+        }
+
+        // Puzzle 3 - Hidden Message
+        function checkPuzzle3() {
+            const input = document.getElementById('puzzle3-input').value.toLowerCase().trim();
+            const errorMsg = document.getElementById('puzzle3-error');
+            const successMsg = document.getElementById('puzzle3-success');
+            
+            if (input === 'birthday') {
+                errorMsg.style.display = 'none';
+                successMsg.style.display = 'block';
+                
+                // Trigger confetti
+                confetti({
+                    particleCount: 150,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 150,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+                
+                setTimeout(() => {
+                    showScreen('final-screen');
+                }, 3000);
+            } else {
+                errorMsg.style.display = 'block';
+                successMsg.style.display = 'none';
+            }
+        }
+
+        // Easter Egg - Konami Code
+        const konamiCode = [
+            'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+            'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+            'b', 'a'
+        ];
+        
+        let konamiIndex = 0;
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                
+                if (konamiIndex === konamiCode.length) {
+                    showEasterEgg();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+        
+        function showEasterEgg() {
+            const easterEgg = document.getElementById('easter-egg');
+            easterEgg.style.display = 'flex';
+            
+            // Trigger confetti
+            confetti({
+                particleCount: 200,
+                spread: 180,
+                origin: { y: 0.3 }
+            });
+        }
+        
+        function closeEasterEgg() {
+            const easterEgg = document.getElementById('easter-egg');
+            easterEgg.style.display = 'none';
+        }
+
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slideshow-photo');
+        
+        function nextSlide() {
+            if (slides.length > 0) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+        }
+        
+        setInterval(nextSlide, 3000);
+
+        // Sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.querySelector('.container').appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 2000);
+        }
+        
+        setInterval(createSparkle, 500);
+
+        // Photo click effects
+        document.querySelectorAll('.couple-photo').forEach(photo => {
+            photo.addEventListener('click', () => {
+                confetti({
+                    particleCount: 50,
+                    spread: 60,
+                    origin: { y: 0.8 }
+                });
+            });
+        });
+
+        // Add Enter key support for input fields
+        document.getElementById('puzzle1-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPuzzle1();
+            }
+        });
+        
+        document.getElementById('puzzle3-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                checkPuzzle3();
+            }
+        });
+    </script>
+</body>
+</html>
